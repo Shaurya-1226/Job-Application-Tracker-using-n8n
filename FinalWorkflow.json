@@ -1,0 +1,652 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "downloadAttachments": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c6f1e006-3c6e-4eb5-ae72-bf0684cc374f",
+      "name": "Email Trigger (IMAP)",
+      "credentials": {
+        "imap": {
+          "id": "PhaLcDbrys5XHtqY",
+          "name": "IMAP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appvG0Ycz5Eqe9RpJ",
+          "mode": "list",
+          "cachedResultName": "Applications",
+          "cachedResultUrl": "https://airtable.com/appvG0Ycz5Eqe9RpJ"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl0QgxPuGcS8bUtg",
+          "mode": "list",
+          "cachedResultName": "Applications",
+          "cachedResultUrl": "https://airtable.com/appvG0Ycz5Eqe9RpJ/tbl0QgxPuGcS8bUtg"
+        },
+        "filterByFormula": "=AND( {Email} = '{{ $json[\"Email\"] }}', {Company} = '{{ $json[\"Company\"] }}' )",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        624,
+        0
+      ],
+      "id": "32c7ec5a-2c39-43e7-8eba-75b7d1efa061",
+      "name": "Search records",
+      "alwaysOutputData": true,
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "ynhP9ijXKwLAoYL1",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f0221b35-03d0-4af7-b7b5-4992bd49eaaf",
+              "leftValue": "={{ $items(\"Search records\")[0] && $items(\"Search records\")[0].json && $items(\"Search records\")[0].json.id ? $items(\"Search records\").length : 0 }}",
+              "rightValue": "0",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        800,
+        -16
+      ],
+      "id": "d09c65e9-6d16-4167-82b2-d47789e914fd",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appvG0Ycz5Eqe9RpJ",
+          "mode": "list",
+          "cachedResultName": "Applications",
+          "cachedResultUrl": "https://airtable.com/appvG0Ycz5Eqe9RpJ"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl0QgxPuGcS8bUtg",
+          "mode": "list",
+          "cachedResultName": "Applications",
+          "cachedResultUrl": "https://airtable.com/appvG0Ycz5Eqe9RpJ/tbl0QgxPuGcS8bUtg"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $('Code in JavaScript1').item.json.Name }}",
+            "Email": "={{ $('Code in JavaScript1').item.json.Email }}",
+            "Company": "={{ $('Code in JavaScript1').item.json.Company }}",
+            "Position": "={{ $('Code in JavaScript1').item.json.Position }}",
+            "Source": "={{ $('Code in JavaScript1').item.json.Source }}",
+            "Status": "={{ $('Code in JavaScript1').item.json.Status }}",
+            "Resume Link": "={{ $('Code in JavaScript1').item.json.ResumeLink }}",
+            "Notes": "={{ $('Code in JavaScript1').item.json.Notes }}",
+            "Date Applied": "={{ $('Code in JavaScript1').item.json.DateApplied }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Position",
+              "displayName": "Position",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Date Applied",
+              "displayName": "Date Applied",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Source",
+              "displayName": "Source",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Gmail",
+                  "value": "Gmail"
+                },
+                {
+                  "name": "LinkedIn",
+                  "value": "LinkedIn"
+                },
+                {
+                  "name": "Indeed",
+                  "value": "Indeed"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Applied",
+                  "value": "Applied"
+                },
+                {
+                  "name": "Interviewing",
+                  "value": "Interviewing"
+                },
+                {
+                  "name": "Reject",
+                  "value": "Reject"
+                },
+                {
+                  "name": "Offer",
+                  "value": "Offer"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Resume Link",
+              "displayName": "Resume Link",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notes",
+              "displayName": "Notes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1136,
+        -240
+      ],
+      "id": "d877a91d-d403-480d-ad5f-5356caae2d59",
+      "name": "Create a record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "ynhP9ijXKwLAoYL1",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "appvG0Ycz5Eqe9RpJ",
+          "mode": "list",
+          "cachedResultName": "Applications",
+          "cachedResultUrl": "https://airtable.com/appvG0Ycz5Eqe9RpJ"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl0QgxPuGcS8bUtg",
+          "mode": "list",
+          "cachedResultName": "Applications",
+          "cachedResultUrl": "https://airtable.com/appvG0Ycz5Eqe9RpJ/tbl0QgxPuGcS8bUtg"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.id }}",
+            "Name": "={{ $('Code in JavaScript').item.json.Name }}",
+            "Email": "={{ $('Code in JavaScript').item.json.Email }}",
+            "Company": "={{ $('Code in JavaScript').item.json.Company }}",
+            "Position": "={{ $('Code in JavaScript').item.json.Position }}",
+            "Date Applied": "={{ $('Code in JavaScript').item.json.DateApplied }}",
+            "Source": "={{ $('Code in JavaScript').item.json.Source }}",
+            "Status": "={{ $('Code in JavaScript').item.json.Status }}",
+            "Notes": "={{ $('Code in JavaScript').item.json.Notes }}",
+            "Resume Link": "={{ $('Code in JavaScript').item.json.ResumeLink }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Position",
+              "displayName": "Position",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Date Applied",
+              "displayName": "Date Applied",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Source",
+              "displayName": "Source",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Gmail",
+                  "value": "Gmail"
+                },
+                {
+                  "name": "LinkedIn",
+                  "value": "LinkedIn"
+                },
+                {
+                  "name": "Indeed",
+                  "value": "Indeed"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Applied",
+                  "value": "Applied"
+                },
+                {
+                  "name": "Interviewing",
+                  "value": "Interviewing"
+                },
+                {
+                  "name": "Reject",
+                  "value": "Reject"
+                },
+                {
+                  "name": "Offer",
+                  "value": "Offer"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Resume Link",
+              "displayName": "Resume Link",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notes",
+              "displayName": "Notes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1168,
+        96
+      ],
+      "id": "c7c4328a-f8ef-4be3-8f20-9e0a579a0956",
+      "name": "Create or update a record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "ynhP9ijXKwLAoYL1",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        224,
+        -32
+      ],
+      "id": "a8ea1ec9-0ed7-4e60-8916-2843f1b2821a",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemma-4-31b-it",
+          "mode": "list",
+          "cachedResultName": "models/gemma-4-31b-it"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are a precise email-data-extraction assistant. Always return exactly one valid JSON object and nothing else (no explanation, no code fences). Follow the schema and rules precisely. NOTE: If the email is not a job application, return nothing.\n\nUser prompt (template — replace bracketed parts)\nExtract applicant data from the following email. Use the email headers, body text, and attachment list exactly as provided. Depending upon description set status to Applied, Interviewing, Reject, or Offer. Depending upon who sent the mail, set Source to Gmail or LinkedIn or Indeed. Put a small summary of the email in notes. Return exactly one JSON object matching this schema (use null for missing fields):\n\n{\n\"Name\": string | null,\n\"Email\": string | null,\n\"Company\": string | null,\n\"Position\": string | null,\n\"DateApplied\": string (ISO8601) | null,\n\"Source\": string | null,\n\"Status\": string | null,\n\"ResumeLink\": string | null,\n\"Notes\": string | null\n}\nHere's the email-\n{{ $json.textHtml }}{{ $json.metadata.received }}{{ $json.subject }}\nThis is who sent the email, not the receiver, use it for status only. Only check the part after @, and Retrieve every other information from above only.-> \n{{ $json.from }}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        336,
+        -336
+      ],
+      "id": "cf4663b7-562b-49e9-a1bd-54bde0dd5ce5",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "VMeyR2brCbZ8DCaO",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Robust n8n Function node to extract JSON from various model outputs and normalize schema\nconst input = $input.item.json;\n\n// Collect candidate text locations\nconst candidates = [];\nif (input.choices && input.choices.length) {\n  const c = input.choices[0];\n  if (c.message && c.message.content) candidates.push(c.message.content);\n  if (c.text) candidates.push(c.text);\n  if (c.content) candidates.push(c.content);\n}\nif (input.output && Array.isArray(input.output)) {\n  candidates.push(input.output.map(x => (typeof x === 'string' ? x : JSON.stringify(x))).join(' '));\n}\nif (input.content && input.content.parts && Array.isArray(input.content.parts)) {\n  input.content.parts.forEach(p => { if (p.text) candidates.push(p.text); });\n}\nif (input.generated_text) candidates.push(input.generated_text);\nif (input.text) candidates.push(input.text);\nif (input.message && input.message.content) candidates.push(input.message.content);\nif (Object.keys(input).length && candidates.length === 0) candidates.push(JSON.stringify(input));\n\n// Merge candidates into one string\nconst combined = candidates.filter(Boolean).join('\\n\\n');\n\n// Find the first JSON object in text\nfunction extractFirstJSONObject(str) {\n  const match = str.match(/{[\\s\\S]*}/);\n  if (!match) return null;\n  try {\n    return JSON.parse(match[0]);\n  } catch (e) {\n    // Try to fix common issues: unquoted keys -> give up (avoid unsafe eval)\n    return null;\n  }\n}\n\nlet parsed = extractFirstJSONObject(combined);\n\n// If not found, attempt parsing the entire string if it is pure JSON\nif (!parsed) {\n  try { parsed = JSON.parse(combined.trim()); } catch(e) { parsed = parsed || null; }\n}\n\n// Keys we require\nconst keys = [\"Name\",\"Email\",\"Company\",\"Position\",\"DateApplied\",\"Source\",\"Status\",\"ResumeLink\",\"Notes\"];\nconst out = {};\nfor (const k of keys) out[k] = null;\n\nif (parsed && typeof parsed === 'object') {\n  for (const k of keys) {\n    if (Object.prototype.hasOwnProperty.call(parsed, k)) {\n      out[k] = parsed[k] === undefined ? null : parsed[k];\n    }\n  }\n}\n\n// Normalize DateApplied to ISO8601 or null\nif (out.DateApplied) {\n  const d = new Date(out.DateApplied);\n  out.DateApplied = isNaN(d.getTime()) ? null : d.toISOString();\n}\n\nreturn [{ json: out }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        688,
+        -336
+      ],
+      "id": "981946a6-97e0-47e5-b792-33698c9bdda5",
+      "name": "Code in JavaScript1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Email Trigger (IMAP)": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search records": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create or update a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a record": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create or update a record": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Search records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "2d99d5f5-bd5a-4554-b38b-71e470109022",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "16dee3ab7f393ca42a1a1c27db506a9d5038cb25022663700bdf4c1cb9e47b10"
+  },
+  "id": "ghDiHf6YdOS8GXDs",
+  "tags": []
+}
