@@ -1,0 +1,9 @@
+We built a Job Application Tracker using a self‑hosted n8n workflow on an AWS EC2 instance on an Ubuntu Machine (http://3.7.191.148:5678). The workflow ingests Gmail messages, extracts applicant fields with Gemini, and creates/updates records in Airtable (alternative to Google Sheets). All components (n8n, Gmail through IMAP integration, Gemini, Airtable) are integrated end‑to‑end using API keys and access tokens; no templates were used - we designed and implemented the pipeline from scratch on EC2. Due to network and resource constraints we used Gemini instead of running Ollama locally on our EC2 server; the system is reliable, always accessible, and ready to demo. We hope to give a tough competition in the next round.
+
+Here's the link to the JSON file and a README file that explains all the nodes- 
+https://drive.google.com/drive/folders/1a7pykQ3G6UYt6MyAvfWcKwxRG4cMXcQ0?usp=sharing
+
+The Airtable file link:
+https://airtable.com/appvG0Ycz5Eqe9RpJ/shrlx6jGtTDun8DWQ
+
+Testing Gmail: testforthelastcommit@gmail.com
