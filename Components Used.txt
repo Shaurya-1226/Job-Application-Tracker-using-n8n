@@ -10,7 +10,7 @@ Loop Over Items: Iterates over each email item so downstream nodes process one m
 
 Message a model: Sends the email payload (headers/body/attachments list) to the LLM (Gemini) to extract applicant fields as strict JSON.
 
-Code in JavaScript (parser): Parses the LLM response, extracts/normalizes the JSON object, coerces missing fields to null, and normalizes DateApplied to ISO8601. (Note: the code for this node was generated through an AI)
+Code in JavaScript (parser): Parses the LLM response, extracts/normalizes the JSON object, coerces missing fields to null, and normalizes DateApplied to ISO8601. (Note: the code for this node was generated through AI)
 
 Search records (Airtable): Looks up existing Airtable records (by Email and/or Company) to detect duplicates or updates.
 
