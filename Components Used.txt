@@ -21,4 +21,4 @@ Create a record (Airtable): Inserts a new application row with mapped fields (Na
 Create or update a record (Airtable Upsert): Updates the existing record (append/merge Notes, preserve Status when absent) to avoid overwriting with nulls.
 
 Quick Testing:
-Manually trigger the IMAP node with a sample email; confirm the parser node returns a JSON object (no nulls where data exists); verify a new row or updated row appears in Airtable.
+Manually trigger the IMAP node with a sample email; confirm the parser node returns a JSON object (no nulls where data exists); verify a new row or updated row appears in Airtable!.
