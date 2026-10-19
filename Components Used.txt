@@ -3,7 +3,7 @@
 Components Used:
 n8n (self‑hosted), AWS EC2, Gemini (inference), Airtable, Gmail (IMAP)
 
-Nodes:
+Nodes:-
 Email Trigger (IMAP): Listens to the Gmail/IMAP inbox and emits each incoming message (headers, plain/text HTML, attachments).
 
 Loop Over Items: Iterates over each email item so downstream nodes process one message at a time.
@@ -14,11 +14,11 @@ Code in JavaScript (parser): Parses the LLM response, extracts/normalizes the JS
 
 Search records (Airtable): Looks up existing Airtable records (by Email and/or Company) to detect duplicates or updates.
 
-If (branch): Tests whether a matching Airtable record exists; routes to Create (no match) or Upsert/Update (match).
+If (branch):- Tests whether a matching Airtable record exists; routes to Create (no match) or Upsert/Update (match).
 
 Create a record (Airtable): Inserts a new application row with mapped fields (Name, Email, Company, Position, DateApplied, Source, Status, ResumeLink, Notes).
 
 Create or update a record (Airtable Upsert): Updates the existing record (append/merge Notes, preserve Status when absent) to avoid overwriting with nulls.
 
-Quick Testing:
+Quick Testing:-
 Manually trigger the IMAP node with a sample email; confirm the parser node returns a JSON object (no nulls where data exists); verify a new row or updated row appears in Airtable.
