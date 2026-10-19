@@ -1,5 +1,4 @@
-//THE PROJECT ONLY WORKS WHEN N8N IS ACTIVE ON HOST ACCOUNT
-
+// THE PROJECT ONLY WORKS WHEN N8N IS ACTIVE ON HOST ACCOUNT
 Components Used:
 n8n (self‑hosted), AWS EC2, Gemini (inference), Airtable, Gmail (IMAP)
 
